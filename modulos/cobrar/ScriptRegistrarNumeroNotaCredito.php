@@ -14,8 +14,8 @@ WHERE
   facturasresumen.IDResumenVenta = ?');
   $sql->execute($datos);
 }
-$NroNotaCredito = limpiarCadena($_GET['NroNotaCredito']);
-$NroVenta = limpiarCadena($_GET['NroVenta']);
+$NroNotaCredito = LimpiarCadena($_GET['NroNotaCredito']);
+$NroVenta = LimpiarCadena($_GET['NroVenta']);
 cobrarActualizarNroNotaCredito([$NroNotaCredito, $NroVenta]);
 
 echo '<script>window.location.href = "https://sistemasinternos.net/systemPlantaGas/VenderFacturasEmitidas"</script>';
