@@ -11,7 +11,8 @@ FROM
   facturasresumen
   INNER JOIN clientes ON facturasresumen.IDCliente = clientes.IDCliente
   INNER JOIN facturasdetalle ON facturasresumen.IDResumenVenta = facturasdetalle.NVenta
-  INNER JOIN articulosdeinventario ON facturasdetalle.IDProducto = articulosdeinventario.IDArticulo
+  INNER JOIN productos ON facturasdetalle.IDProducto = productos.IDProducto
+  INNER JOIN tipo_productos ON productos.IDTipoProducto = tipo_productos.IDTipo
   INNER JOIN facturasmediopago ON facturasresumen.IDResumenVenta = facturasmediopago.NVenta
 WHERE
   facturasresumen.IDResumenVenta = ?');
@@ -44,10 +45,10 @@ $i = 0;
     <?php foreach ($consulta as $row) :
       $i++;
     ?>
-      <input type="hidden" name="descripcion[<?php echo $i ?>]" value="<?php echo $row['DescripcionArticulo']; ?>">
+      <input type="hidden" name="descripcion[<?php echo $i ?>]" value="<?php echo $consulta['DescripcionTipo'] . ' ' . $consulta['DescripcionProducto'] ?>">
       <input type="hidden" name="cantidad[<?php echo $i ?>]" value="<?php echo $row['Cantidad']; ?>">
       <input type="hidden" name="precio[<?php echo $i ?>]" value="<?php echo $row['Precio']; ?>">
-      <input type="hidden" name="alicuota[<?php echo $i ?>]" value="<?php echo $row['IDAlicuota']; ?>">
+      <input type="hidden" name="alicuota[<?php echo $i ?>]" value="<?php echo $row['Alicuota']; ?>">
     <?php endforeach; ?>
   </form>
 
