@@ -49,12 +49,12 @@ foreach (reporteFacturasEmitidas([$_SESSION['PlantaGas']['IDPlanta'], $del, $has
                             <i class="lni lni-reply"></i>
                         </a>
                     </td>';
-    } elseif ($_SESSION['PlantaGas']['IDUsuario'] == 1 || ($row['NFacturaFiscal'] != 2)) {
+    } elseif (($row['NFacturaFiscal'] == 2 || $row['NFacturaFiscal'] == null)) {
       $tabla .= '<td>
-                        <a class="btn btn-lg" href="https://sistemasinternos.net/systemPlantaGas/modulos/cobrar/CobrarNotaCreditoMANUAL.php?n=' . Encriptar($row['IDResumenVenta']) . '&s=' . Encriptar($_SESSION['PlantaGas']['IDPlanta']) . '">
-                            <i class="lni lni-reply"></i>
-                        </a>
-                    </td>';
+        <a class="btn btn-lg" href="https://sistemasinternos.net/systemPlantaGas/modulos/cobrar/CobrarNotaCreditoMANUAL.php?n=' . Encriptar($row['IDResumenVenta']) . '&s=' . Encriptar($_SESSION['PlantaGas']['IDPlanta']) . '">
+            <i class="lni lni-reply"></i>
+        </a>
+    </td>';
     } else {
       $tabla .= '<td>
                   <span class="status-btn dark-btn">LA FACTURA NO SE PUEDE ANULAR</span>
