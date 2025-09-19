@@ -1,7 +1,7 @@
 <?php
 require_once '../main.php';
 require_once 'ClienteMain.php';
-
+require_once '../dependencias.php';
 function validarRif($cadena)
 {
     $primerCaracter = strtoupper(substr($cadena, 0, 1));
