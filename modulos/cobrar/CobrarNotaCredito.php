@@ -3,7 +3,6 @@ require_once '../main.php';
 require_once '../sessionStart.php';
 require_once '../cobrar/CobrarMain.php';
 require_once '../reportes/reportes_main.php';
-require_once '../inventario/inventario_main.php';
 require_once '../dependencias.php';
 $IDSucursal = $_GET['id'] ?? $_SESSION['PlantaGas']['IDPlanta'];
 $NroVenta = Desencriptar(LimpiarCadena($_GET['n']));
