@@ -1,7 +1,7 @@
 <?php
 require_once '../main.php';
 require_once '../sessionStart.php';
-
+require_once '../dependencias.php';
 $IDSucursal = $_SESSION['PlantaGas']['IDPlanta'];
 $IDCaja = 1;
 
