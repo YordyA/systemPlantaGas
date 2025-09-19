@@ -9,7 +9,7 @@ $lockHandle = fopen($lockFile, 'w');
 if (flock($lockHandle, LOCK_EX)) {
 
   if (!isset($_SESSION['carritoVenta']['cliente']) || !isset($_SESSION['carritoVenta']['productos'])) {
-    echo '
+    echo '0
       <script>
         alert("SIN VENTA POR REGISTRAR")
         window.location.href = https://sistemasinternos.net/systemPlantaGas/Vender"
@@ -30,7 +30,7 @@ if (flock($lockHandle, LOCK_EX)) {
   $responsable =$_SESSION['PlantaGas']['nombreUsuario'];
   $IDSucursal =$_SESSION['PlantaGas']['IDPlanta'];
   $Nventa = NVenta();
-  $NroCaja = $_SESSION['PlantaGas']['NroCaja'];
+  $NroCaja = 1; // $_SESSION['PlantaGas']['NroCaja'];
   $fecha = date('Y-m-d');
   $ultimaFacturaFiscal = 0;
 
