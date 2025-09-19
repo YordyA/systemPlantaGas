@@ -19,14 +19,8 @@ FROM
   INNER JOIN tipo_productos ON productos.IDTipoProducto = tipo_productos.IDTipo
   INNER JOIN facturasmediopago ON facturasresumen.IDResumenVenta = facturasmediopago.NVenta
 WHERE
-  facturasresumen.IDResumenVenta = ?
-  AND facturasresumen.IDSucursal = ?');
-$consulta->execute(
-  [
-    $NroVenta,
-    $IDSucursal
-  ]
-);
+  facturasresumen.IDResumenVenta = ?');
+$consulta->execute([$NroVenta]);
 
 $consulta = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
@@ -42,7 +36,6 @@ $i = 0;
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FACTURA</title>
 </head>
-
 <body>
   <form id="formulario" action="http://localhost/maquinaFiscal/notaDeCredito.php" method="post">
     <input type="hidden" name="NroVenta" value="<?php echo $consulta[0]['NVenta']; ?>">
