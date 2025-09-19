@@ -27,7 +27,7 @@ $consulta = $consulta->fetchAll(PDO::FETCH_ASSOC);
 anularResumenVenta([$NroVenta, $IDSucursal]);
 $i = 0;
 var_dump($consulta[0]['NFacturaFiscal']);
-exit;
+exit();
 ?>
 
 <!DOCTYPE html>
