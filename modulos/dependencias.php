@@ -5,7 +5,7 @@ const SECRET_KEY = '$ing33218034@';
 const SECRET_IV = '9256420';
 
 //* RIF DE LA EMPRESA
-const RIF = 'G00000000';
+const RIF = 'G200166037';
 const RAZONSOCIAL = 'APURE GAS';
 const DOMICILIOFISCAL = '';
 
