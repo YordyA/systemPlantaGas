@@ -45,7 +45,7 @@ $i = 0;
     <?php foreach ($consulta as $row) :
       $i++;
     ?>
-      <input type="hidden" name="descripcion[<?php echo $i ?>]" value="<?php echo $consulta['DescripcionTipo'] . ' ' . $consulta['DescripcionProducto'] ?>">
+      <input type="hidden" name="descripcion[<?php echo $i ?>]" value="<?php echo $row['DescripcionTipo'] . ' ' .  $row['DescripcionProducto'] ?>">
       <input type="hidden" name="cantidad[<?php echo $i ?>]" value="<?php echo $row['Cantidad']; ?>">
       <input type="hidden" name="precio[<?php echo $i ?>]" value="<?php echo $row['Precio']; ?>">
       <input type="hidden" name="alicuota[<?php echo $i ?>]" value="<?php echo $row['Alicuota']; ?>">
