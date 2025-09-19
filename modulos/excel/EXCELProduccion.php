@@ -1,0 +1,143 @@
+<?php
+require_once '../main.php';
+require_once '../dependencias.php';
+require_once '../sessionStart.php';
+require_once '../produccion/produccionMain.php';
+require_once 'vendor/autoload.php';
+
+$IDProduccionResumen = desencriptar($_GET['id']);
+$consulta = produccionConsultarXID([$IDProduccionResumen])->fetchAll(PDO::FETCH_ASSOC);
+
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Style\NumberFormat\Wizard\Number;
+
+$style = [
+  'textTitulo' => [
+    'alignment' => [
+      'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+      'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+    ],
+    'font' => [
+      'bold' => true,
+      'size' => 14,
+    ],
+  ],
+  'textTituloFont' => [
+    'alignment' => [
+      'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+      'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+    ],
+    'font' => [
+      'bold' => true,
+      'size' => 10,
+    ],
+  ],
+  'textTituloBorder' => [
+    'alignment' => [
+      'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+    ],
+    'font' => [
+      'bold' => true,
+      'size' => 10,
+    ],
+    'borders' => [
+      'allBorders' => [
+        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        'color' => ['rgb' => '000000'],
+      ],
+    ],
+  ],
+  'textSencillo' => [
+    'alignment' => [
+      'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+    ],
+    'font' => [
+      'bold' => false,
+      'size' => 9,
+    ],
+    'borders' => [
+      'allBorders' => [
+        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+        'color' => ['rgb' => '000000'],
+      ],
+    ],
+  ],
+  'textSencilloSinBorder' => [
+    'alignment' => [
+      'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT,
+    ],
+    'font' => [
+      'bold' => false,
+      'size' => 10,
+    ]
+  ],
+];
+
+$excel = new SpreadSheet;
+$sheet = $excel->getActiveSheet();
+$sheet->setTitle('FORMULA');
+
+$sheet->getColumnDimension('A')->setWidth(15);
+$sheet->getColumnDimension('B')->setWidth(25);
+$sheet->getColumnDimension('C')->setWidth(30);
+$sheet->getColumnDimension('D')->setWidth(15);
+$sheet->getColumnDimension('E')->setWidth(25);
+$sheet->getColumnDimension('F')->setWidth(15);
+
+$row = 1;
+$sheet->mergeCells('A' . $row . ':F' . $row);
+$sheet->getStyle('A' . $row)->applyFromArray($style['textTitulo']);
+$sheet->setCellValue('A' . $row++, RAZONSOCIAL);
+$sheet->mergeCells('A' . $row . ':F' . $row);
+$sheet->getStyle('A' . $row)->applyFromArray($style['textTituloFont']);
+$sheet->setCellValue('A' . $row++, DOMICILIOFISCAL);
+$sheet->mergeCells('A' . $row . ':F' . $row);
+$sheet->getStyle('A' . $row)->applyFromArray($style['textTituloFont']);
+$sheet->setCellValue('A' . $row++, 'R.I.F: ' . RIF);
+$row++;
+
+$sheet->mergeCells('A' . $row . ':F' . $row);
+$sheet->getStyle('A' . $row)->applyFromArray($style['textSencilloSinBorder']);
+$sheet->setCellValue('A' . $row++, 'FECHA DE LA PRODUCCION: ' . $consulta[0]['FechaProduccion']);
+$sheet->mergeCells('A' . $row . ':F' . $row);
+$sheet->getStyle('A' . $row)->applyFromArray($style['textSencilloSinBorder']);
+$sheet->setCellValue('A' . $row++, 'PRODUCCION ARTICULO: ' . $consulta[0]['DescripcionArticulo']);
+$sheet->mergeCells('A' . $row . ':F' . $row);
+$sheet->getStyle('A' . $row)->applyFromArray($style['textSencilloSinBorder']);
+$sheet->setCellValue('A' . $row++, 'RESPONSABLE DE LA PRODUCCION: ' . $consulta[0]['ResponsableProduccion']);
+$row++;
+
+$sheet->getStyle('A' . $row . ':F' . $row)->applyFromArray($style['textTituloBorder']);
+$sheet->setCellValue('A' . $row, 'TIPO PRODUCTO');
+$sheet->setCellValue('B' . $row, 'CÓDIGO DEL PRODUCTO');
+$sheet->setCellValue('C' . $row, 'DESCRIPCIÓN PRODUCTO');
+$sheet->setCellValue('D' . $row, 'COSTO UTILIZADO');
+$sheet->setCellValue('E' . $row, 'CANTIDAD UTILIZADA');
+$sheet->setCellValue('F' . $row++, 'SUBTOTAL COSTO');
+
+$rowInicio = $row;
+foreach ($consulta as $rowDetalle) {
+  $sheet->setCellValue('A' . $row, $rowDetalle['DescripcionTipoProducto']);
+  $sheet->setCellValue('B' . $row, $rowDetalle['CodigoProducto']);
+  $sheet->setCellValue('C' . $row, $rowDetalle['DescripcionProducto']);
+  $sheet->setCellValue('D' . $row, $rowDetalle['CostoUtilizado']);
+  $sheet->getCell('D' . $row)->getStyle()->getNumberFormat()->setFormatCode((string) new Number(2, Number::WITH_THOUSANDS_SEPARATOR));
+  $sheet->setCellValue('E' . $row, $rowDetalle['CantidadUtilizada']);
+  $sheet->getCell('E' . $row)->getStyle()->getNumberFormat()->setFormatCode((string) new Number(4, Number::WITH_THOUSANDS_SEPARATOR));
+  $sheet->setCellValue('F' . $row, '=(D' . $row . '*E' . $row . ')');
+  $sheet->getCell('F' . $row++)->getStyle()->getNumberFormat()->setFormatCode((string) new Number(2, Number::WITH_THOUSANDS_SEPARATOR));
+}
+$sheet->getStyle('A' . $row . ':F' . $row)->applyFromArray($style['textTituloBorder']);
+$sheet->mergeCells('A' . $row . ':E' . $row);
+$sheet->setCellValue('A' . $row, 'T O T A L');
+$sheet->setCellValue('F' . $row, '=SUM(F' . $rowInicio . ':F' . ($row - 1) . ')');
+$sheet->getCell('F' . $row)->getStyle()->getNumberFormat()->setFormatCode((string) new Number(2, Number::WITH_THOUSANDS_SEPARATOR));
+$sheet->getStyle('A' . $rowInicio . ':F' . ($row - 1))->applyFromArray($style['textSencillo']);
+
+header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+header('Content-Disposition: attachment;filename="' . RAZONSOCIAL . ' - PRODUCCION - ' . $consulta[0]['FechaProduccion'] . ' - ' . $consulta[0]['DescripcionArticulo'] . '.xlsx"');
+header('Cache-Control: max-age=0');
+$writer = IOFactory::createWriter($excel, 'Xlsx');
+$writer->save('php://output');
+exit;
