@@ -331,7 +331,7 @@
                                 <li>
                   <a href="#">
                     <i class="lni lni-cash-app"></i>TASA DIA:
-                    <?= round(floatval($_SESSION['PlantaGAs']['Dolar']), 4); ?>
+                    <?= round(floatval($_SESSION['PlantaGas']['Dolar']), 4); ?>
                   </a>
                 </li>
                 <li>

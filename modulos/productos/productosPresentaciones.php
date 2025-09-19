@@ -6,6 +6,7 @@ require_once 'productosMain.php';
 $html = '';
 foreach (ProductosLista() as $row) {
   $html .= '<tr>';
+  $html .= '<td>' . $row['Codigo'] . '</td>';
   $html .= '<td>' . $row['DescripcionTipo'] . '</td>';
   $html .= '<td><i>' . $row['DescripcionProducto'] . '</i></td>';
   $html .= '<td><i>' . number_format($row['CapacipadCilindro'], 2, ',', '.') . '</i></td>';

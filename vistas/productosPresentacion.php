@@ -18,6 +18,9 @@
                 <thead>
                   <tr>
                     <th class="text-center">
+                      <h6>CODIGO</h6>
+                    </th>
+                    <th class="text-center">
                       <h6>TIPO</h6>
                     </th>
                     <th class="text-center">

@@ -5,7 +5,7 @@ require_once '../cobrar/CobrarMain.php';
 require_once '../reportes/reportes_main.php';
 require_once '../inventario/inventario_main.php';
 require_once '../dependencias.php';
-$IDSucursal = $_GET['id'] ??$_SESSION['PlantaGas']['IDPlanta'];
+$IDSucursal = $_GET['id'] ?? $_SESSION['PlantaGas']['IDPlanta'];
 $NroVenta = Desencriptar(LimpiarCadena($_GET['n']));
 
 //! OJO
@@ -15,7 +15,8 @@ FROM
   facturasresumen
   INNER JOIN clientes ON facturasresumen.IDCliente = clientes.IDCliente
   INNER JOIN facturasdetalle ON facturasresumen.IDResumenVenta = facturasdetalle.NVenta
-  INNER JOIN articulosdeinventario ON facturasdetalle.IDProducto = articulosdeinventario.IDArticulo
+  INNER JOIN productos ON facturasdetalle.IDProducto = productos.IDProducto
+  INNER JOIN tipo_productos ON productos.IDTipoProducto = tipo_productos.IDTipo
   INNER JOIN facturasmediopago ON facturasresumen.IDResumenVenta = facturasmediopago.NVenta
 WHERE
   facturasresumen.IDResumenVenta = ?
@@ -58,10 +59,10 @@ $i = 0;
     <?php foreach ($consulta as $row) :
       $i++;
     ?>
-      <input type="hidden" name="descripcion[<?php $i ?>]" value="<?php echo $row['DescripcionArticulo']; ?>">
+      <input type="hidden" name="descripcion[<?php $i ?>]" value="<?php echo $row['DescripcionTipo'] . ' ' .  $row['DescripcionProducto'] ?>">
       <input type="hidden" name="cantidad[<?php $i ?>]" value="<?php echo $row['Cantidad']; ?>">
       <input type="hidden" name="precio[<?php $i ?>]" value="<?php echo $row['Precio']; ?>">
-      <input type="hidden" name="alicuota[<?php $i ?>]" value="<?php echo $row['IDAlicuota']; ?>">
+      <input type="hidden" name="alicuota[<?php $i ?>]" value="<?php echo $row['Alicuota']; ?>">
     <?php endforeach; ?>
   </form>
 
