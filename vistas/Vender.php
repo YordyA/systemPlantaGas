@@ -1369,8 +1369,8 @@ const crearVenta = async () => {
   } else if (modal == 8) {
     window.location.href = 'http://localhost/maquinaFiscal/index.php';
   } else if (abonoTotalFacturaBs == total) {
-   // window.location.href = 'http://localhost/maquinaFiscal/index.php';
-   window.location.href = 'modulos/cobrar/CobrarRegistrarVenta.php';
+   window.location.href = 'http://localhost/maquinaFiscal/index.php';
+  // window.location.href = 'modulos/cobrar/CobrarRegistrarVenta.php';
   } else {
     Swal.fire({
       position: "center",

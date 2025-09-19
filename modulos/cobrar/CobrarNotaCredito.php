@@ -4,8 +4,8 @@ require_once '../sessionStart.php';
 require_once '../cobrar/CobrarMain.php';
 require_once '../reportes/reportes_main.php';
 require_once '../inventario/inventario_main.php';
-
-$IDSucursal = $_GET['id'] ??$_SESSION['PlantaGas']['IDSucursal'];
+require_once '../dependencias.php';
+$IDSucursal = $_GET['id'] ??$_SESSION['PlantaGas']['IDPlanta'];
 $NroVenta = Desencriptar(LimpiarCadena($_GET['n']));
 
 //! OJO
@@ -28,26 +28,6 @@ $consulta->execute(
 );
 
 $consulta = $consulta->fetchAll(PDO::FETCH_ASSOC);
-
-foreach ($consulta as $row) {
-  ActualizarExistenciaSumar(
-    [
-      $row['Cantidad'],
-      $row['IDArticulo'],
-      $IDSucursal
-    ]
-  );
-  EntradaProductosInventario(
-    [
-      $IDSucursal,
-      date('Y-m-d'),
-      'ANULACION DE VENTA Nro ' . $row['NVentaResumen'],
-      $row['IDArticulo'],
-      $row['Cantidad'],
-     $_SESSION['PlantaGas']['NombreUsuario']
-    ]
-  );
-}
 
 anularResumenVenta([$NroVenta, $IDSucursal]);
 $i = 0;
@@ -93,5 +73,4 @@ $i = 0;
 </body>
 
 </html>
-
 </html>
