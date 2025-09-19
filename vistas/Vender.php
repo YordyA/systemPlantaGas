@@ -1200,7 +1200,7 @@ const rifCliente = async (id) => {
 }
 
 const registrarCliente = async () => {
-  const peticion = await fetch('modulos/cliente/ClienteRegistrar.php', {
+  const peticion = await fetch('modulos/clientes/ClienteRegistrar.php', {
     method: 'POST',
     body: new FormData(formulario)
   })
