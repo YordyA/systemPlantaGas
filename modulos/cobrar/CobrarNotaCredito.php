@@ -7,7 +7,6 @@ require_once '../inventario/inventario_main.php';
 require_once '../dependencias.php';
 $IDSucursal = $_GET['id'] ?? $_SESSION['PlantaGas']['IDPlanta'];
 $NroVenta = Desencriptar(LimpiarCadena($_GET['n']));
-
 //! OJO
 $consulta = conexion()->prepare('SELECT
   *
