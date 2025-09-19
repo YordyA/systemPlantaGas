@@ -45,13 +45,13 @@ foreach (reporteFacturasEmitidas([$_SESSION['PlantaGas']['IDPlanta'], $del, $has
   } else {
     if ($row['NFacturaFiscal'] == 0) {
       $tabla .= '<td>
-                        <a class="btn btn-lg" href="https://agrofloracorpogaba.org.ve/systemFrigorificos/modulos/cobrar/CobrarEmitirFacturacFiscal.php?n=' . Encriptar($row['IDResumenVenta']) . '&c=' . Encriptar($row['IDCliente']) . '&NroCaja=' . Encriptar($row['IDCaja']) . '">
+                        <a class="btn btn-lg" href="https://sistemasinternos.net/systemPlantaGas/modulos/cobrar/CobrarEmitirFacturacFiscal.php?n=' . Encriptar($row['IDResumenVenta']) . '&c=' . Encriptar($row['IDCliente']) . '&NroCaja=' . Encriptar($row['IDCaja']) . '">
                             <i class="lni lni-reply"></i>
                         </a>
                     </td>';
-    } elseif ($_SESSION['frigorifico']['IDUsuario'] == 1 || ($row['NFacturaFiscal'] != 0)) {
+    } elseif ($_SESSION['PlantaGas']['IDUsuario'] == 1 || ($row['NFacturaFiscal'] != 0)) {
       $tabla .= '<td>
-                        <a class="btn btn-lg" href="https://agrofloracorpogaba.org.ve/systemFrigorificos/modulos/cobrar/CobrarNotaCreditoMANUAL.php?n=' . Encriptar($row['IDResumenVenta']) . '&s=' . Encriptar($_SESSION['PlantaGas']['IDPlanta']) . '">
+                        <a class="btn btn-lg" href="https://sistemasinternos.net/systemPlantaGas/modulos/cobrar/CobrarNotaCreditoMANUAL.php?n=' . Encriptar($row['IDResumenVenta']) . '&s=' . Encriptar($_SESSION['PlantaGas']['IDPlanta']) . '">
                             <i class="lni lni-reply"></i>
                         </a>
                     </td>';
