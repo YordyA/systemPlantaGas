@@ -12,7 +12,7 @@ if (flock($lockHandle, LOCK_EX)) {
     echo '
       <script>
         alert("SIN VENTA POR REGISTRAR")
-        window.location.href = "https://agrofloracorpogaba.org.ve/systemFrigorificos/Vender"
+        window.location.href = https://sistemasinternos.net/systemPlantaGas/Vender"
       </script>';
     exit();
   }
@@ -22,7 +22,7 @@ if (flock($lockHandle, LOCK_EX)) {
     echo '
         <script>
           alert("NO HA CANCELADO EL TOTAL DE LA VENTA")
-          window.location.href = "https://agrofloracorpogaba.org.ve/systemFrigorificos/Vender"
+          window.location.href = "https://sistemasinternos.net/systemPlantaGas/Vender"
         </script>';
     exit();
   }
@@ -224,7 +224,7 @@ if (flock($lockHandle, LOCK_EX)) {
   }
 
   unset($_SESSION['carritoVenta']);
-  echo '<script>window.location.href = "https://agrofloracorpogaba.org.ve/systemFrigorificos/modulos/cobrar/CobrarEmitirFacturacFiscal.php?n=' . Encriptar($IDFacturaResumen) . '&c=' . Encriptar($IDCliente) . '"</script>';
+  echo '<script>window.location.href = "https://sistemasinternos.net/systemPlantaGas/modulos/cobrar/CobrarEmitirFacturacFiscal.php?n=' . Encriptar($IDFacturaResumen) . '&c=' . Encriptar($IDCliente) . '"</script>';
 
   flock($lockHandle, LOCK_UN);
 } else {

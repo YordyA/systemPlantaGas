@@ -328,6 +328,17 @@
                     <i class="lni lni-user"></i> Mi Perfil
                   </a>
                 </li>
+                                <li>
+                  <a href="#">
+                    <i class="lni lni-cash-app"></i>TASA DIA:
+                    <?= round(floatval($_SESSION['PlantaGAs']['Dolar']), 4); ?>
+                  </a>
+                </li>
+                <li>
+                  <a href="http://localhost/maquinaFiscal/config.php" target="_blank">
+                    <i class="lni lni-cogs"></i>MAQUINA FISCAL
+                  </a>
+                </li>
                 <li>
                   <a href="#0" id="btnSalir"> <i class="lni lni-exit"></i>
                     Cerrar Sesion
