@@ -49,7 +49,7 @@ foreach (reporteFacturasEmitidas([$_SESSION['PlantaGas']['IDPlanta'], $del, $has
                             <i class="lni lni-reply"></i>
                         </a>
                     </td>';
-    } elseif ($_SESSION['PlantaGas']['IDUsuario'] == 1 || ($row['NFacturaFiscal'] != 0)) {
+    } elseif ($_SESSION['PlantaGas']['IDUsuario'] == 1 || ($row['NFacturaFiscal'] != 2)) {
       $tabla .= '<td>
                         <a class="btn btn-lg" href="https://sistemasinternos.net/systemPlantaGas/modulos/cobrar/CobrarNotaCreditoMANUAL.php?n=' . Encriptar($row['IDResumenVenta']) . '&s=' . Encriptar($_SESSION['PlantaGas']['IDPlanta']) . '">
                             <i class="lni lni-reply"></i>

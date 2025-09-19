@@ -3,7 +3,7 @@ require_once '../main.php';
 require_once '../sessionStart.php';
 require_once '../cobrar/CobrarMain.php';
 require_once '../reportes/reportes_main.php';
-require_once '../inventario/inventario_main.php';
+require_once '../dependencias.php';
 
 $IDSucursal = $_GET['s'];
 $NroVenta = $_GET['n'];
@@ -15,7 +15,8 @@ FROM
   facturasresumen
   INNER JOIN clientes ON facturasresumen.IDCliente = clientes.IDCliente
   INNER JOIN facturasdetalle ON facturasresumen.IDResumenVenta = facturasdetalle.NVenta
-  INNER JOIN articulosdeinventario ON facturasdetalle.IDProducto = articulosdeinventario.IDArticulo
+  INNER JOIN productos ON facturasdetalle.IDProducto = productos.IDProducto
+  INNER JOIN tipo_productos ON productos.IDTipoProducto = tipo_productos.IDTipo
   INNER JOIN facturasmediopago ON facturasresumen.IDResumenVenta = facturasmediopago.NVenta
 WHERE
   facturasresumen.IDResumenVenta = ?
