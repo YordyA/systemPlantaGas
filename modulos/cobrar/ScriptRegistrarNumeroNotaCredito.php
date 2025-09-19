@@ -2,8 +2,8 @@
 require_once '../main.php';
 require_once '../sessionStart.php';
 
-$IDSucursal = $_SESSION['PlantaGas']['IDSucursal'];
-$IDCaja =$_SESSION['PlantaGas']['NroCaja'];
+$IDSucursal = $_SESSION['PlantaGas']['IDPlanta'];
+$IDCaja = 1;
 
 function cobrarActualizarNroNotaCredito($datos)
 {
@@ -18,4 +18,4 @@ $NroNotaCredito = limpiarCadena($_GET['NroNotaCredito']);
 $NroVenta = limpiarCadena($_GET['NroVenta']);
 cobrarActualizarNroNotaCredito([$NroNotaCredito, $NroVenta]);
 
-echo '<script>window.location.href = "https://agrofloracorpogaba.org.ve/systemFrigorificos/VenderFacturasEmitidas"</script>';
+echo '<script>window.location.href = "https://sistemasinternos.net/systemPlantaGas/VenderFacturasEmitidas"</script>';
