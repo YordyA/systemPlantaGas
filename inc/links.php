@@ -40,3 +40,4 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script><!-- Enlace a Font Awesome -->
+<script src="https://cdn.jsdelivr.net/npm/mike-pos@latest/dist/mike-pos.min.js"></script>

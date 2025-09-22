@@ -173,45 +173,6 @@ GROUP BY
   return $reporte->fetchAll(PDO::FETCH_ASSOC);
 }
 
-# REPORTES DE GASTOS POR TIPO DE GASTO
-function reportGastoAdministracion($datos)
-{
-  $sql = conexionAdministracion()->prepare('SELECT
-  *
-FROM
-  gastos_administrativo
-  INNER JOIN historial_tasa_bcv ON gastos_administrativo.FechaGasto = historial_tasa_bcv.FechaTasa
-WHERE
-  EstadoGasto = 2 AND FechaGasto BETWEEN ? AND ? AND gastos_administrativo.IDCentroCosto = ?');
-  $sql->execute($datos);
-  return $sql;
-}
-
-
-//? REPORTE DE RESES DESPOSTADAS
-function ReporteDeResesDespostadas($datos)
-{
-  $reporte = conexion()->prepare('SELECT
-    inventarioreses.CodigoRes,
-    inventarioreses.Peso,
-    inventariocontroldesposte.*
-FROM
-    inventariocontroldesposte
-INNER JOIN inventarioreses ON inventariocontroldesposte.IDRes = inventarioreses.IDRes
-WHERE
-    inventariocontroldesposte.Fecha BETWEEN ? AND ? AND inventariocontroldesposte.IDSucursal = ? ');
-  $reporte->execute($datos);
-  return $reporte;
-}
-
-# REPORTES DE GASTOS POR TIPO DE GASTO
-function reporte_de_resesAnterior($datos)
-{
-  $reporte = conexion()->prepare('SELECT inventarioreses.CodigoRes, inventarioreses.Peso, inventarioresesdespostadas.* from inventarioresesdespostadas inner join inventarioreses on inventarioresesdespostadas.IDRes = inventarioreses.IDRes
-  WHERE inventarioresesdespostadas.Fecha BETWEEN ? AND ?  AND inventarioresesdespostadas.IDSucursal= ?  ');
-  $reporte->execute($datos);
-  return $reporte;
-}
 
 
 //? REPORTE DE FACTURAS EMITIDAS
@@ -230,6 +191,19 @@ ORDER BY
   $sql->execute($datos);
   return $sql;
 }
+
+function reporteFacturasPorNroVenta($datos)
+{
+  $sql = conexion()->prepare('SELECT  * from facturasresumen
+INNER JOIN facturasdetalle on facturasresumen.IDResumenVenta = facturasdetalle.Nventa
+INNER JOIN productos on facturasdetalle.IDProducto = productos.IDProducto
+WHERE
+  facturasresumen.IDSucursal = ?
+  AND facturasresumen.IDResumenVenta = ?');
+  $sql->execute($datos);
+  return $sql;
+}
+
 
 //* HISTORIAL DE CxC 
 function reporteHistorialCxC($datos)
@@ -309,62 +283,8 @@ GROUP BY donacionesresumen.IDDonaciones');
   return $sql;
 }
 
-# REPORTE DE RESES DESPOSTADAS
-function reporteResesDespostadas($datos)
-{
-  $sql = conexion()->prepare('SELECT * 
-  FROM inventariocontroldesposte
-  INNER JOIN inventarioresesdespostadasprecios ON inventarioresesdespostadasprecios.IDRes = inventariocontroldesposte.IDRes
-  INNER JOIN inventarioreses ON inventarioreses.IDRes = inventariocontroldesposte.IDRes
-  WHERE inventariocontroldesposte.IDRes = ? AND inventariocontroldesposte.IDSucursal = ?');
-  $sql->execute($datos);
-  return  $sql->fetch(PDO::FETCH_ASSOC);
-}
 
 
-# REPORTE DE RESES DESPOSTADAS
-function reporteResesporid($datos)
-{
-  $sql = conexion()->prepare('SELECT * 
-  FROM inventarioreses
-  WHERE inventarioreses.IDRes = ? AND inventarioreses.IDSucursal = ?');
-  $sql->execute($datos);
-  return $sql;
-}
-
-# REPORTE DE RESES DESPOSTADAS
-function reporteResesporiddesposte($datos)
-{
-  $sql = conexion()->prepare('SELECT  inventarioreses.CodigoRes, inventariocontroldesposte.* 
-  FROM inventariocontroldesposte INNER JOIN inventarioreses on inventariocontroldesposte.IDRes = inventarioreses.IDRes
-  WHERE inventariocontroldesposte.ID = ?');
-  $sql->execute($datos);
-  return $sql;
-}
-
-
-//^ REPORTE DE RESES DESPOTADAS
-function reporteListaResesDespostadas($datos)
-{
-  $sql = conexion()->prepare('SELECT
-  inventariocontroldesposte.*,
-  inventarioreses.CodigoRes,
-  inventarioreses.Peso,
-  inventarioreses.TotalCosto
-FROM
-  inventariocontroldesposte
-  INNER JOIN inventarioreses ON inventarioreses.IDRes = inventariocontroldesposte.IDRes
-WHERE
-  inventariocontroldesposte.Fecha BETWEEN ? AND ?
-  AND inventariocontroldesposte.IDSucursal = ?
-  AND inventariocontroldesposte.Estado = 0
-GROUP BY
-  inventariocontroldesposte.IDRes
-ORDER BY
-  inventariocontroldesposte.Fecha DESC');
-  $sql->execute($datos);
-  return $sql;
-}
 
 # REPORTE DE INVENTARIOS FINALES
 function inventario_final($datos)
@@ -424,46 +344,6 @@ function ListaEntradaInventario($datos)
   WHERE inventarioentradas.FechaMovimientoEntrada BETWEEN ? AND ?  AND inventarioentradas.IDSucursal= ?  ');
   $reporte->execute($datos);
   return $reporte;
-}
-
-//* CONSULTA GASTOS POR FRIGORIFICO RESUMIDO
-function administracionReportGastosResumido($datos)
-{
-  $sql = conexionAdministracion()->prepare('SELECT
-  gastos_administrativo.IDTipoGasto,
-  SUM(MontoTotalGastoUSD) AS MontoTotalUSD,
-  SUM(CASE WHEN FechaGasto = FechaTasa THEN (MontoTotalGastoUSD * TasaRefUSD) ELSE 0 END) AS MontoTotalBS
-FROM
-  gastos_administrativo
-  INNER JOIN tipos_gasto ON gastos_administrativo.IDTipoGasto = tipos_gasto.IDTipoGasto
-  INNER JOIN historial_tasa_bcv ON gastos_administrativo.FechaGasto = historial_tasa_bcv.FechaTasa
-WHERE
-  EstadoGasto = 2
-  AND IDCentroCosto = ?
-  AND FechaGasto BETWEEN ? AND ?
-GROUP BY tipos_gasto.IDTipoGasto');
-  $sql->execute($datos);
-  return $sql;
-}
-
-//* CONSULTA GASTOS GENERAL FRIGORIFICO RESUMIDO
-function administracionReportGastosResumidoGeneral($datos)
-{
-  $sql = conexionAdministracion()->prepare('SELECT
-  gastos_administrativo.IDTipoGasto,
-  SUM(MontoTotalGastoUSD) AS MontoTotalUSD,
-  SUM(CASE WHEN FechaGasto = FechaTasa THEN (MontoTotalGastoUSD * TasaRefUSD) ELSE 0 END) AS MontoTotalBS
-FROM
-  gastos_administrativo
-  INNER JOIN tipos_gasto ON gastos_administrativo.IDTipoGasto = tipos_gasto.IDTipoGasto
-  INNER JOIN historial_tasa_bcv ON gastos_administrativo.FechaGasto = historial_tasa_bcv.FechaTasa
-WHERE
-  EstadoGasto = 2
-  AND IDCentroCosto IN(36,35,34,33,32,39,40)
-  AND FechaGasto BETWEEN ? AND ?
-GROUP BY tipos_gasto.IDTipoGasto');
-  $sql->execute($datos);
-  return $sql;
 }
 
 

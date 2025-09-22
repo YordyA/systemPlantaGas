@@ -36,6 +36,15 @@ foreach (reporteFacturasEmitidas([$_SESSION['PlantaGas']['IDPlanta'], $del, $has
                 <i class="lni lni-files"></i>
               </button>
             </td>';
+  if ($row['FechaLlenado'] != NULL) {
+    $tabla .= '<td><span class="status-btn success-btn">DESPACHADO</span></td>';
+  } else {
+$tabla .= '<td>
+    <button class="btn btn-lg despachar-btn" value="' . Encriptar($row['IDResumenVenta']) . '">
+        <i class="lni lni-printer"></i>
+    </button>
+</td>';
+  }
   if (date('Y-m-d') == $row['Fecha'] && $row['Estatus'] == 0 &&  $row['NFacturaFiscal'] != 0) {
     $tabla .= '<td>
                 <button class="btn btn-lg anular" value="' . Encriptar($row['IDResumenVenta']) . '">
