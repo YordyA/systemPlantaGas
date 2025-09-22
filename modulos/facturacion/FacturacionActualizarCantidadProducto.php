@@ -28,12 +28,7 @@ if (isset($_SESSION['carritoVenta']['productos'])) {
         exit();
     }
     
-    $Existencia = 0;
-    foreach (almacenLista([$_SESSION['PlantaGas']['IDPlanta']]) as $row) {
-        if ($row['Pricipal'] == 1) {
-            $Existencia = $row['Cantidad'];
-        }
-    }
+
 
     // Validación de capacidad del cilindro
     // Corregí la lógica: la existencia debe ser mayor o igual al doble de la capacidad
@@ -44,16 +39,11 @@ if (isset($_SESSION['carritoVenta']['productos'])) {
         round(floatval($consulta['PrecioVenta'] * $usd), 2) : 
         round(floatval($consulta['PrecioVenta']), 2);
     
-    if ($capacidadValida) {
         // Actualizar el precio en caso de que haya cambiado
         $_SESSION['carritoVenta']['productos'][$i]['precio'] = $Precio;
-        
         $_SESSION['carritoVenta']['productos'][$i]['cantidad'] = round(floatval($cantidad), 3);
         $_SESSION['carritoVenta']['productos'][$i]['subtotal'] = round(floatval($Precio * $cantidad), 2);
         echo json_encode(true);
-    } else {
-        echo json_encode(false);
-    }
 } else {
     echo json_encode(false);
     exit();
