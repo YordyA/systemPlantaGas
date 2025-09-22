@@ -37,7 +37,7 @@ if (!password_verify($clave, $consultaUsuario['Clave'])) {
   exit();
 }
 
-$verificar_dolar = conexion()->prepare('SELECT * FROM historial_tasa_bcv WHERE FechaTasa = ?');
+$verificar_dolar = conexionAdministrativo()->prepare('SELECT * FROM historial_tasa_bcv WHERE FechaTasa = ?');
 $verificar_dolar->execute([$fecha]);
 if ($verificar_dolar->rowCount() != 1) {
   echo "<script>
