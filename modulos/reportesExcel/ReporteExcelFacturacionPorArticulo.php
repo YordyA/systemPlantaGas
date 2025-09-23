@@ -84,14 +84,14 @@ $exento = 0;
 $base = 0;
 $fila = 6;
 
-foreach (FacturacionPorArticulo([$del, $hasta, $_SESSION['PlantaGas']['IDPlanta'], $_SESSION['PlantaGas']['IDPlanta']]) as $row) {
+foreach (FacturacionPorArticulo([$del, $hasta, $_SESSION['PlantaGas']['IDPlanta']]) as $row) {
 
-  if ($row['IDAlicuota'] == 1) {
+  if ($row['IDAlicuota'] == 0.00) {
 
     $totalventasiniva = $row['TotalBs'];
     $exento += $row['TotalBs'];
     $totaldolares +=  $totalventasinivaUSD = $row['TotalUSD'];
-  } else if ($row['IDAlicuota'] == 2) {
+  } else if ($row['IDAlicuota'] == 0.16) {
 
     $totalventasiniva = $row['TotalBs'] / 1.16;
     $totaliva += ($row['TotalBs'] / 1.16) * 0.16;

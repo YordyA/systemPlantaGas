@@ -7,34 +7,32 @@ function FacturacionPorArticulo($datos)
   $reporte = conexion()->prepare("SELECT 
   facturasdetalle.IDProducto,
   facturasresumen.IDSucursal,
-  articulosdeinventario.DescripcionArticulo,
-  articulosdeinventario.CodigoArticulo,
-  articulosdeinventario.IDAlicuota,
-  contabilidadpartidas.CodigoPartida AS CodigoPartida,
+  productos.DescripcionProducto,
+  productos.Codigo,
+  tipo_productos.DescripcionTipo,
+  tipo_productos.Alicuota,
   SUM(facturasdetalle.Cantidad) AS TotalCantidad,
   SUM(facturasdetalle.SubTotal) AS TotalBs,
   ROUND(SUM(CASE WHEN facturasresumen.Fecha = TasaUsd.FechaTasa THEN (facturasdetalle.SubTotal / TasaUsd.TasaRefUSD) ELSE 0 END), 2) AS TotalUSD
 FROM  
   facturasresumen
   INNER JOIN facturasdetalle ON facturasresumen.IDResumenVenta = facturasdetalle.NVenta
-  INNER JOIN articulosdeinventario ON facturasdetalle.IDProducto = articulosdeinventario.IDArticulo
-  INNER JOIN existenciaporsucursal ON articulosdeinventario.IDArticulo = existenciaporsucursal.IDArticulo
-  LEFT JOIN contabilidadpartidas ON existenciaporsucursal.PartidaContable = contabilidadpartidas.IDPartida
-  INNER JOIN agroflor_administracion_empresas.historial_tasa_bcv AS TasaUsd ON facturasresumen.Fecha = TasaUsd.FechaTasa
+  INNER JOIN productos ON facturasdetalle.IDProducto = productos.IDProducto
+  INNER JOIN tipo_productos ON productos.IDTipoProducto = tipo_productos.IDTipo
+  INNER JOIN sistema4_vida_digna.historial_tasa_bcv AS TasaUsd ON facturasresumen.Fecha = TasaUsd.FechaTasa
 WHERE
   facturasresumen.Fecha BETWEEN ? AND ?
   AND facturasresumen.IDSucursal = ?
-  AND existenciaporsucursal.IDSucursal = ?
   AND facturasresumen.Estatus NOT IN (2, 3)
 GROUP BY 
   facturasdetalle.IDProducto,
   facturasresumen.IDSucursal,
-  articulosdeinventario.DescripcionArticulo,
-  articulosdeinventario.CodigoArticulo,
-  articulosdeinventario.IDAlicuota,
-  contabilidadpartidas.CodigoPartida
+  productos.DescripcionProducto,
+  tipo_productos.DescripcionTipo,
+  tipo_productos.Alicuota,
+  productos.Codigo
 ORDER BY 
-  articulosdeinventario.CodigoArticulo");
+    productos.Codigo;");
   $reporte->execute($datos);
   return $reporte->fetchAll(PDO::FETCH_ASSOC);
 }
