@@ -86,12 +86,12 @@ $fila = 6;
 
 foreach (FacturacionPorArticulo([$del, $hasta, $_SESSION['PlantaGas']['IDPlanta']]) as $row) {
 
-  if ($row['IDAlicuota'] == 0.00) {
+  if ($row['Alicuota'] == 0.00) {
 
     $totalventasiniva = $row['TotalBs'];
     $exento += $row['TotalBs'];
     $totaldolares +=  $totalventasinivaUSD = $row['TotalUSD'];
-  } else if ($row['IDAlicuota'] == 0.16) {
+  } else if ($row['Alicuota'] == 0.16) {
 
     $totalventasiniva = $row['TotalBs'] / 1.16;
     $totaliva += ($row['TotalBs'] / 1.16) * 0.16;
