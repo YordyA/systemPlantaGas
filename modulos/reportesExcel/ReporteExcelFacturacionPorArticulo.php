@@ -103,8 +103,8 @@ foreach (FacturacionPorArticulo([$del, $hasta, $_SESSION['PlantaGas']['IDPlanta'
 
   $totalbs += $totalventasiniva;
   $hoja_activa->setCellValue('A' . $fila, $row['CodigoArticulo']);
-  $hoja_activa->setCellValue('B' . $fila, $row['CodigoPartida']);
-  $hoja_activa->setCellValue('C' . $fila, $row['DescripcionArticulo']);
+  $hoja_activa->setCellValue('B' . $fila, '');
+  $hoja_activa->setCellValue('C' . $fila, $row['DescripcionTipo'] . ' '. $row['DescripcionProducto'] );
   $hoja_activa->setCellValue('D' . $fila, round($row['TotalCantidad'], 3));
   $hoja_activa->setCellValue('E' . $fila, round($totalventasiniva, 2));
   $hoja_activa->setCellValue('F' . $fila, round($totalventasinivaUSD, 2));
