@@ -23,7 +23,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 $excel = new SpreadSheet;
 
 $hoja_activa = $excel->getActiveSheet();
-$hoja_activa->setTitle('CuadreDeCaja');
+$hoja_activa->setTitle('Facturacion Por Articulos');
 
 
 $styleArray = [
