@@ -26,7 +26,7 @@ require './modulos/dependencias.php';
   if (is_file('./vistas/' . $_GET['vista'] . '.php') && $_GET['vista'] != 'login' && $_GET['vista'] != '404') {
     
     // Verificar si la sesión existe y tiene la estructura esperada
-    if (!isset($_SESSION['PlantaGas']) || empty($_SESSION['PlantaGas']) || !isset($_SESSION['PlantaGas']['Privilegio'])) {
+    if (!isset($_SESSION['PlantaGas']) || empty($_SESSION['PlantaGas']) || !isset($_SESSION['PlantaGas']['IDPrivilegio'])) {
       include './inc/logout.php';
       exit();
     }
@@ -35,7 +35,7 @@ require './modulos/dependencias.php';
     $arrayNavbar = ['navbar.php', 'navbar.php', 'nabvarCaja.php'];
     
     // Verificar que el índice de privilegio existe en el array
-    $privilegio = $_SESSION['PlantaGas']['Privilegio'];
+    $privilegio = $_SESSION['PlantaGas']['IDPrivilegio'];
     if (isset($arrayNavbar[$privilegio]) && is_file('./inc/' . $arrayNavbar[$privilegio])) {
       include './inc/' . $arrayNavbar[$privilegio];
     } else {
