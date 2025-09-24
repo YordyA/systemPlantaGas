@@ -1,12 +1,12 @@
 <?php
 require_once '../main.php';
 require_once '../dependencias.php';
-$cedulaPagador = LimpiarCadena($_POST['cedula']);
+$cedulaPagador = limpiarCadena($_POST['cedula']);
 $telefonoPagador = LimpiarCadena($_POST['telefono']);
-$referencia = LimpiarCadena($_POST['referencia']);
-$monto = LimpiarCadena($_POST['cantidad']);
-$fechaPago = LimpiarCadena($_POST['fecha']);
-$banco = LimpiarCadena($_POST['banco']);
+$referencia = limpiarCadena($_POST['referencia']);
+$monto = limpiarCadena($_POST['cantidad']);
+$fechaPago = limpiarCadena($_POST['fecha']);
+$banco = limpiarCadena($_POST['banco']);
 
 if ($cedulaPagador == '' || $telefonoPagador == '' || $referencia == '' || $fechaPago == '' || $banco == '') {
   echo json_encode([false, 'TODO LOS CAMPOS SON REQUERIDOS']);
