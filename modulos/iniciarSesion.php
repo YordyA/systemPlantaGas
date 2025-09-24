@@ -65,7 +65,7 @@ $_SESSION['PlantaGas'] = [
   'privilegio'        => $consultaUsuario['DescripcionPrivilegio'],
   'Dolar'           => $verificar_dolar['TasaRefUSD'],
   'PesajeInicial'   => $verificar_pesaje_inicial->rowCount(),
-  'NroCaja'  => $consultaUsuario['DescripcionPrivilegio']
+  'NroCaja'  => $consultaUsuario['NroCaja']
 ];
 
 if (headers_sent()) {
