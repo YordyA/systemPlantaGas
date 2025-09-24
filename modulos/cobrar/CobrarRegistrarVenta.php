@@ -30,7 +30,7 @@ if (flock($lockHandle, LOCK_EX)) {
   $responsable =$_SESSION['PlantaGas']['nombreUsuario'];
   $IDSucursal =$_SESSION['PlantaGas']['IDPlanta'];
   $Nventa = NVenta();
-  $NroCaja = 1; // $_SESSION['PlantaGas']['NroCaja'];
+  $NroCaja = $_SESSION['PlantaGas']['NroCaja'];
   $fecha = date('Y-m-d');
   $ultimaFacturaFiscal = 0;
 

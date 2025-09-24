@@ -75,8 +75,9 @@
                   </a>
                 </li>
                 <li>
-                  <a href="#0" id="btnCerrarSesion"> <i class="lni lni-exit"></i> Cerrar
-                    Sesion </a>
+                  <a href="#0" id="btnSalir"> <i class="lni lni-exit"></i>
+                    Cerrar Sesion
+                  </a>
                 </li>
               </ul>
             </div>
