@@ -65,6 +65,12 @@
                   </a>
                 </li>
                 <li>
+                  <a href="#">
+                    <i class="lni lni-cash-app"></i>Nro Caja
+                    <?= round(floatval($_SESSION['PlantaGas']['NroCaja']), 4); ?>
+                  </a>
+                </li>
+                <li>
                   <a href="http://localhost/maquinaFiscal/config.php" target="_blank">
                     <i class="lni lni-cogs"></i>MAQUINA FISCAL
                   </a>
