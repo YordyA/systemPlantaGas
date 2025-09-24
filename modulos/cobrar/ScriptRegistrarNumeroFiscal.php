@@ -1,6 +1,7 @@
 <?php
 require_once '../main.php';
 require_once '../sessionStart.php';
+require_once '../dependencias.php';
 
 function cobrarActualizarNroFacturaFiscal($datos)
 {
@@ -19,4 +20,4 @@ $serialMaquinaFiscal = $_GET['serial'];
 $NroVenta = limpiarCadena($_GET['NroVenta']);
 cobrarActualizarNroFacturaFiscal([$serialMaquinaFiscal, $NroFacturaFiscal, $NroVenta]);
 
-echo '<script>window.location.href = "https://agrofloracorpogaba.org.ve/systemFrigorificos/Vender"</script>';
+echo '<script>window.location.href = "https://sistemasinternos.net/systemPlantaGas/Vender"</script>';
