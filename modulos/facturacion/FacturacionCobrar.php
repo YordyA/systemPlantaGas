@@ -12,8 +12,8 @@ $tasCopRef = floatval(($_SESSION['PlantaGas']['IDPlanta'] == 2) ? 4300 : 5000);
 
 $arrayCliente = $_SESSION['carritoVenta']['cliente'];
 
-$modal = LimpiarCadena($_GET['mp']);
-$montoAbonadoBs = (isset($_POST['cantidad'])) ? LimpiarCadena(round(floatval($_POST['cantidad']), 2)) : 0;
+$modal = limpiarCadena($_GET['mp']);
+$montoAbonadoBs = (isset($_POST['cantidad'])) ? limpiarCadena(round(floatval($_POST['cantidad']), 2)) : 0;
 
 if ($modal == 2) {
   $_SESSION['carritoVenta']['cliente']['montoEfectivoBs'] += round(floatval($montoAbonadoBs), 2);
@@ -33,11 +33,11 @@ if ($modal == 2) {
   $_SESSION['carritoVenta']['cliente']['montoPuntoVentaBs'] += round(floatval($montoAbonadoBs), 2);
   $_SESSION['carritoVenta']['cliente']['montoMedioPagosElectronicos'] += floatval($montoAbonadoBs);
 } else if ($modal == 5) {
-  $cedulaPagador = LimpiarCadena($_POST['cedula']);
-  $telefonoPagador = LimpiarCadena($_POST['telefono']);
-  $referencia = LimpiarCadena($_POST['referencia']);
+  $cedulaPagador = limpiarCadena($_POST['cedula']);
+  $telefonoPagador = limpiarCadena($_POST['telefono']);
+  $referencia = limpiarCadena($_POST['referencia']);
   $fechaPago = date('Y-m-d');
-  $banco = LimpiarCadena($_POST['banco']);
+  $banco = limpiarCadena($_POST['banco']);
 
   if ($cedulaPagador == '' || $telefonoPagador == '' || $referencia == '' || $fechaPago == '' || $banco == '') {
     echo json_encode([false, 'TODO LOS CAMPOS SON REQUERIDOS']);
@@ -84,12 +84,12 @@ if ($modal == 2) {
   $_SESSION['carritoVenta']['cliente']['referenciasMontosPagoMovil'] .= 'R= ' . $referencia . 'M= ' . number_format($montoAbonadoBs, 2) . '//';
   $_SESSION['carritoVenta']['cliente']['montoTotalPagoMovil'] += round(floatval($montoAbonadoBs), 2);
 } else if ($modal == 9) {
-  $IDBilleteCOP = floatval(Desencriptar(LimpiarCadena($_GET['id'])));
+  $IDBilleteCOP = floatval(Desencriptar(limpiarCadena($_GET['id'])));
   $montoAbonadoBs += floatval(round(($IDBilleteCOP / $tasCopRef) * $tasaRef, 2));
   $_SESSION['carritoVenta']['cliente']['montoTotalCop'] += $IDBilleteCOP;
   $_SESSION['carritoVenta']['cliente']['billetesCop'][$IDBilleteCOP] += 1;
 } else if ($modal == 7) {
-  $referencia = LimpiarCadena($_POST['referencia']);
+  $referencia = limpiarCadena($_POST['referencia']);
 
   if ($referencia == '') {
     echo json_encode([false, 'TODO LOS CAMPOS SON REQUERIDOS']);
@@ -104,7 +104,7 @@ if ($modal == 2) {
   $_SESSION['carritoVenta']['cliente']['referenciasMontosPagoMovil'] .= 'R= ' . $referencia . 'M= ' . number_format($montoAbonadoBs, 2) . '//';
   $_SESSION['carritoVenta']['cliente']['montoTotalPagoMovil'] += round(floatval($montoAbonadoBs), 2);
 } else if ($modal == 6) {
-  $IDBilleteUSD = floatval(Desencriptar(LimpiarCadena($_GET['id'])));
+  $IDBilleteUSD = floatval(Desencriptar(limpiarCadena($_GET['id'])));
   $_SESSION['carritoVenta']['cliente']['montoTotalUsd'] += $IDBilleteUSD;
   $montoAbonadoBs = floatval(round($IDBilleteUSD * $tasaRef, 2));
   $_SESSION['carritoVenta']['cliente']['billetesUsd'][$IDBilleteUSD] += 1;
