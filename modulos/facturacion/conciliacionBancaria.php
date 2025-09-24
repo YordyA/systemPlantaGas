@@ -25,7 +25,7 @@ curl_setopt_array($curl, [
   CURLOPT_CUSTOMREQUEST => "POST",
   CURLOPT_POSTFIELDS => "{\n  \"cedulaPagador\": \"$cedulaPagador\",\n  \"telefonoPagador\": \"$telefonoPagador\",\n  \"telefonoDestino\": \"04145790251\",\n  \"referencia\": \"$referencia\",\n  \"fechaPago\": \"$fechaPago\",\n  \"importe\": \"$monto\",\n  \"bancoOrigen\": \"$banco\"\n}",
   CURLOPT_HTTPHEADER => [
-    "X-API-Key: 975125547930B1157194E4BA495D048F",
+    "X-API-Key: C5AD11C3D276B8F746FA1CA21BBF5FDB",
     "content-type: application/json"
   ],
 ]);
