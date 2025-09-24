@@ -25,7 +25,7 @@ require './modulos/dependencias.php';
       include './inc/logout.php';
       exit();
     }
-     $arrayNavbar = ['nabvar.php', 'nabvar.php', 'nabvarCaja.php'];
+     $arrayNavbar = ['navbar.php', 'navbar.php', 'nabvarCaja.php'];
     include './inc/' . $arrayNavbar[$_SESSION['PlantaGas']['Privilegio']];
     include './vistas/' . $_GET['vista'] . '.php';
     include './inc/script.php';
