@@ -25,7 +25,8 @@ require './modulos/dependencias.php';
       include './inc/logout.php';
       exit();
     }
-    include './inc/navbar.php';
+     $arrayNavbar = ['nabvar.php', 'nabvar.php', 'nabvarCaja.php'];
+    include './inc/' . $arrayNavbar[$_SESSION['PlantaGas']['Privilegio']];
     include './vistas/' . $_GET['vista'] . '.php';
     include './inc/script.php';
   } else {
@@ -37,5 +38,3 @@ require './modulos/dependencias.php';
   }
   ?>
 </body>
-
-</html>
