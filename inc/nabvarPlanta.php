@@ -31,7 +31,7 @@
             <a href="InventarioConteoFisicoFinal" id="InventarioConteoFisicoFinal">Cierre de Inventario</a>
           </li>
           <li>
-            <a href="VenderFacturasEmitidasPorDespachar" id="VenderFacturasEmitidasPorDespachar">Cierre de Inventario</a>
+            <a href="VenderFacturasEmitidasPorDespachar" id="VenderFacturasEmitidasPorDespachar">Despachos Pendientes</a>
           </li>
           <li>
             <a href="productosPresentacion" id="productosPresentacion">Tipos de Presentacion</a>
