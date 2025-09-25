@@ -192,6 +192,25 @@ ORDER BY
   return $sql;
 }
 
+//? REPORTE DE FACTURAS EMITIDAS
+function reporteFacturasPendientePorDespacho($datos)
+{
+  $sql = conexion()->prepare('SELECT  clientes.RifCliente, clientes.NombreCliente, caja.DescripcionCaja, facturasresumen.*
+FROM
+  facturasresumen
+  INNER JOIN clientes ON facturasresumen.IDCliente = clientes.IDCliente
+  INNER JOIN caja ON facturasresumen.IDCaja = caja.IDCaja
+WHERE
+  facturasresumen.IDSucursal = ?
+  AND facturasresumen.FechaDespacho = NULL
+  AND facturasresumen.Estatus = 0
+ORDER BY
+  facturasresumen.IDResumenVenta DESC');
+  $sql->execute($datos);
+  return $sql;
+}
+
+
 function reporteFacturasPorNroVenta($datos)
 {
   $sql = conexion()->prepare('SELECT  * from facturasresumen

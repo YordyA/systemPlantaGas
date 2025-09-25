@@ -20,7 +20,7 @@ $reponsable = $_SESSION['PlantaGas']['nombreUsuario'];
 $IDPlanta = $_SESSION['PlantaGas']['IDPlanta'];
 $NroVenta = desencriptar($_GET['id']);
 $consulta = reporteFacturasPorNroVenta([$IDPlanta, $NroVenta]);
-if ($consulta->rowCount() < 0) {
+if ($consulta->rowCount() <= 0) { // Cambié < 0 por <= 0
   $alerta = [
     "alerta"  => "simple",
     "titulo"  => "¡OCURRIO UN ERROR INESPERADO!",
@@ -37,7 +37,6 @@ $ticketData = [
     'empresa' => $_SESSION['PlantaGas']['Planta'],
     'items' => []
 ];
-
 
 $Existencia = 0;
 $IDInventario = 0;
@@ -86,8 +85,8 @@ MovimientosDeAlmacenRegistrar(
   ]
 );
 
-
-$ticketData['total'] = $total;
+// CORRECCIÓN: Usar $TotalGas en lugar de $total que no existe
+$ticketData['total'] = $TotalGas; // Cambié $total por $TotalGas
 $ticketData['nro_venta'] = $NroVentaPlanta;
 
 $alerta = [
