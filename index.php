@@ -32,7 +32,7 @@ require './modulos/dependencias.php';
     }
     
     // CORRECCIÓN: Cambiar "nabvar" por "navbar"
-    $arrayNavbar = ['navbar.php', 'navbar.php', 'nabvarCaja.php'];
+    $arrayNavbar = ['navbar.php', 'navbar.php', 'nabvarCaja.php', 'nabvarPlanta.php'];
     
     // Verificar que el índice de privilegio existe en el array
     $privilegio = $_SESSION['PlantaGas']['IDPrivilegio'];
