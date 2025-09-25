@@ -202,7 +202,7 @@ FROM
   INNER JOIN caja ON facturasresumen.IDCaja = caja.IDCaja
 WHERE
   facturasresumen.IDSucursal = ?
-  AND facturasresumen.FechaDespacho = NULL
+  AND facturasresumen.FechaDespacho IS NULL
   AND facturasresumen.Estatus = 0
 ORDER BY
   facturasresumen.IDResumenVenta DESC');
