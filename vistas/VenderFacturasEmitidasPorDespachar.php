@@ -199,10 +199,15 @@
   })
 }
 
-const generarTicket = async (numeroVenta) => {
+const generarTicket = (numeroVenta) => {
+  // Crear URL con el número de venta
   const urlTicket = `modulos/pdf/NotaDespacho.php?id=${encodeURIComponent(numeroVenta)}`
+  
+  console.log('Cargando ticket en navegador:', urlTicket);
+  
+  // Cargar la URL en la misma ventana/contexto del navegador
+  window.location.href = urlTicket;
 }
-
 
   // Event listeners
   $(document).on('click', '.factura', function() {

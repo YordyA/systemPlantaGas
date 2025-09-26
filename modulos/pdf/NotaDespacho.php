@@ -61,7 +61,7 @@ foreach ($consulta as $row) {
     <title>Redirigiendo al ticket...</title>
 </head>
 <body>
-    <form id="ticketForm" action="http://localhost/ticket/ticket.php" method="POST" target="_blank">
+    <form id="formulario" action="http://localhost/ticket/ticket.php" method="POST">
         <input type="hidden" name="planta" value="<?php echo htmlspecialchars($_SESSION['PlantaGas']['Planta']); ?>">
         <input type="hidden" name="venta" value="<?php echo $consulta[0]['NVentaResumen']; ?>">
         <input type="hidden" name="cliente" value="<?php echo htmlspecialchars($consulta[0]['NombreCliente']); ?>">
