@@ -15,7 +15,7 @@ if (isset($_SESSION['conteo']) && count($_SESSION['conteo']) > 0) {
     }
 
     $tabla['tabla'] .= '<tr>';
-    $tabla['tabla'] .= '<td>' . $row['codigo'] . '</td>';
+    $tabla['tabla'] .= '<td>' . $row['medida'] . '</td>';
     $tabla['tabla'] .= '<td>' . $row['descripcion'] . '</td>';
     $tabla['tabla'] .= '<td>' . number_format($row['existencia'], 3, '.', ',') . '</td>';
     $tabla['tabla'] .= '<td>

@@ -18,7 +18,7 @@ if ($verificar->rowCount() == 0) {
 foreach (ConsultarArticulosConteoFisico([$_SESSION['PlantaGas']['IDPlanta']]) as $row) {
     $_SESSION['conteo'][] = [
       'id_producto' => $row['IDInventario'],
-      'medida'      => 'GALONES',
+      'medida'      => 'LITROS',
       'descripcion' => $row['DescripcionAlmacen'],
       'existencia'  => floatval($row['Cantidad']),
       'cantidad'    => floatval(0.000),

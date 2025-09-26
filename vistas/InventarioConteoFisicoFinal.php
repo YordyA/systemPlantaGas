@@ -4,7 +4,7 @@
       <div class="row align-items-center">
         <div class="col-md-12">
           <div class="title mb-30">
-            <h2>APERTURA DE INVENTARIO</h2>
+            <h2>CIERRE DE INVENTARIO</h2>
           </div>
         </div>
       </div>
@@ -105,8 +105,8 @@
     console.log(respuesta)
     if (respuesta[0]) {
       Swal.fire({
-        title: '!APERTURA REALIZADA¡',
-        text: 'La Apertura Fue Realizada con Exito',
+        title: '!CIERRE REALIZADA¡',
+        text: 'La CIERRE Fue Realizada con Exito',
         icon: 'success',
         showCancelButton: false,
         confirmButtonColor: '#3085d6',
@@ -118,7 +118,7 @@
       })
     } else {
       Swal.fire({
-        title: '!APERTURA NO REALIZADA¡',
+        title: '!CIERRE NO REALIZADA¡',
         text: 'La existencia fisica no puede ser igual a la existencia en sistema',
         icon: 'error',
         showCancelButton: false,
@@ -134,7 +134,7 @@
     if (respuesta == true) {
       listado()
       Swal.fire({
-        title: '!APERTURA CANCELADA¡',
+        title: '!CIERRE CANCELADA¡',
         text: 'El Conteo Fue Cancelado',
         icon: 'error',
         showCancelButton: false,
@@ -177,7 +177,7 @@
     e.preventDefault()
     Swal.fire({
       title: '¿Esta Seguro?',
-      text: 'La Apertura Sera Cancelada',
+      text: 'La CIERRE Sera Cancelada',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -196,7 +196,7 @@
     e.preventDefault()
     Swal.fire({
       title: '¿Esta Seguro?',
-      text: 'La Apertura sera iniciada',
+      text: 'La CIERRE sera iniciada',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -214,7 +214,7 @@
     e.preventDefault()
     Swal.fire({
       title: '¿Esta Seguro?',
-      text: 'La Apertura sera registrada',
+      text: 'La CIERRE sera registrada',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
