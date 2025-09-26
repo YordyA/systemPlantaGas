@@ -39,7 +39,7 @@ foreach ($_SESSION['conteo'] as $row) {
         $row['existencia'],
         $inventario,
         $row['id_producto'],
-        'CIERRE DE INVENTARIO: MANIPULACION DEL DIA',
+        'CIERRE DE INVENTARIO',
         $_SESSION['PlantaGas']['nombreUsuario']
       ]
     );
@@ -53,7 +53,7 @@ foreach ($_SESSION['conteo'] as $row) {
         $row['existencia'],
         $inventario,
         $row['id_producto'],
-        'CIERRE DE INVENTARIO: MANIPULACION DEL DIA',
+        'CIERRE DE INVENTARIO',
         $_SESSION['PlantaGas']['nombreUsuario']
       ]
     );
