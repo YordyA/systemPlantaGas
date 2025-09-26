@@ -3,8 +3,6 @@ require_once '../main.php';
 require_once '../sessionStart.php';
 require_once '../dependencias.php';
 
-// Incluir la librería de ESC/POS
-require_once '../vendor/autoload.php';
 
 // Obtener el número de venta desde la URL
 $NroVenta = isset($_GET['id']) ? $_GET['id'] : null;
@@ -56,16 +54,26 @@ foreach ($consulta as $row) {
     $ticket["total_cant"] += $cantidad;
     $ticket["total_lts"]  += $lts;
 }
-
-// Enviar los datos a ticket.php mediante POST
-$url = "http://localhost/ticket/ticket.php";
-$options = [
-    'http' => [
-        'header'  => "Content-type: application/json\r\n",
-        'method'  => 'POST',
-        'content' => json_encode($ticket)
-    ]
-];
-$context  = stream_context_create($options);
-$result = file_get_contents($url, false, $context);
-echo $result; // Opcional: mostrar respuesta
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirigiendo al ticket...</title>
+</head>
+<body>
+    <form id="ticketForm" action="http://localhost/ticket/ticket.php" method="POST" target="_blank">
+        <input type="hidden" name="planta" value="<?php echo htmlspecialchars($_SESSION['PlantaGas']['Planta']); ?>">
+        <input type="hidden" name="venta" value="<?php echo $consulta[0]['NVentaResumen']; ?>">
+        <input type="hidden" name="cliente" value="<?php echo htmlspecialchars($consulta[0]['NombreCliente']); ?>">
+        <input type="hidden" name="items" value='<?php echo json_encode($ticket['items']); ?>'>
+        <input type="hidden" name="total_cant" value="<?php echo $ticket['total_cant']; ?>">
+        <input type="hidden" name="total_lts" value="<?php echo $ticket['total_lts']; ?>">
+    </form>
+    
+  <script>
+    window.onload = function() {
+      formulario.submit()
+    }
+  </script>
+</body>
+</html>

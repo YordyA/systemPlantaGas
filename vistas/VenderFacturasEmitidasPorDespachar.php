@@ -201,14 +201,6 @@
 
 const generarTicket = async (numeroVenta) => {
   const urlTicket = `modulos/pdf/NotaDespacho.php?id=${encodeURIComponent(numeroVenta)}`
-  
-  try {
-    const response = await fetch(urlTicket)
-    const result = await response.text()
-    console.log("Ticket generado:", result)
-  } catch (error) {
-    console.error("Error al generar ticket:", error)
-  }
 }
 
 
