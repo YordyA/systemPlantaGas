@@ -114,7 +114,8 @@ WHERE
 function consultarFacturasEnEspera($datos)
 {
   $sql = conexion()->prepare('SELECT * FROM facturasespera 
-          INNER JOIN articulosdeinventario ON facturasespera.IDArticulo = articulosdeinventario.IDArticulo
+          INNER JOIN productos ON facturasespera.IDArticulo = productos.IDProducto
+          INNER JOIN tipo_productos on productos.IDTipoProducto = tipo_productos.IDTipo
           INNER JOIN clientes ON facturasespera.IDCliente = clientes.IDCliente
         WHERE facturasespera.IDSucursal = ? AND facturasespera.NFacturaEspera = ?');
   $sql->execute($datos);
@@ -128,11 +129,11 @@ function consultarFacturasEnEsperaDonacion($datos)
   *
 FROM
   facturasespera
-  INNER JOIN existenciaporsucursal ON facturasespera.IDArticulo = existenciaporsucursal.IDArticulo
   INNER JOIN clientes ON facturasespera.IDCliente = clientes.IDCliente
+  INNER JOIN productos ON facturasespera.IDArticulo = productos.IDProducto
+  INNER JOIN tipo_productos on productos.IDTipoProducto = tipo_productos.IDTipo
 WHERE
-  existenciaporsucursal.IDSucursal = ?
-  AND facturasespera.IDSucursal = ?
+  facturasespera.IDSucursal = ?
   AND facturasespera.NFacturaEspera = ?');
   $sql->execute($datos);
   return $sql;
@@ -213,9 +214,10 @@ ORDER BY
 
 function reporteFacturasPorNroVenta($datos)
 {
-  $sql = conexion()->prepare('SELECT  * from facturasresumen
+  $sql = conexion()->prepare('SELECT  * FROM facturasresumen
 INNER JOIN facturasdetalle on facturasresumen.IDResumenVenta = facturasdetalle.Nventa
 INNER JOIN productos on facturasdetalle.IDProducto = productos.IDProducto
+INNER JOIN tipo_productos on productos.IDTipoProducto = tipo_productos.IDTipo
 WHERE
   facturasresumen.IDSucursal = ?
   AND facturasresumen.IDResumenVenta = ?');
@@ -292,7 +294,7 @@ function reporteFacturasDonaciones($datos)
 FROM
     donacionesdetalle
 INNER JOIN donacionesresumen ON donacionesdetalle.NDonacion = donacionesresumen.IDDonaciones
-INNER JOIN agroflor_administracion_empresas.historial_tasa_bcv AS historial_tasa_bcv ON donacionesresumen.Fecha = historial_tasa_bcv.FechaTasa
+INNER JOIN historial_tasa_bcv AS historial_tasa_bcv ON donacionesresumen.Fecha = historial_tasa_bcv.FechaTasa
 INNER JOIN clientes ON donacionesresumen.IDCliente = clientes.IDCliente
 WHERE
     IDSucursal = ?

@@ -23,9 +23,9 @@ if ($consulta[0]['EstadoFactura'] != 3) {
 foreach ($consulta as $row) {
   $_SESSION['facturaManual']['detalle'][$row['IDDetalleVenta']] = [
     'IDProducto'    => $row['IDProducto'],
-    'IDAlicuota'    => $row['IDAlicuota'],
-    'codigo'        => $row['CodigoArticulo'],
-    'descripcion'   => $row['DescripcionArticulo'],
+    'IDAlicuota'    => $row['Alicuota'],
+    'codigo'        => $row['Codigo'],
+    'descripcion'   => $row['DescripcionTipo']. ' ' . $row['DescripcionProducto'],
     'precio'        => 0,
     'cantidad'      => $row['Cantidad']
   ];

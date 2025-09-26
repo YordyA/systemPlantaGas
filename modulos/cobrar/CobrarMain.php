@@ -86,9 +86,10 @@ function consultarDonacionPorNroDonacion($datos)
 FROM
   donacionesresumen
   INNER JOIN donacionesdetalle ON donacionesresumen.IDDonaciones = donacionesdetalle.NDonacion
-  INNER JOIN articulosdeinventario ON donacionesdetalle.IDProducto = articulosdeinventario.IDArticulo
+  INNER JOIN productos ON donacionesdetalle.IDProducto = productos.IDProducto
+  INNER JOIN tipo_productos ON productos.IDTipoProducto = tipo_productos.IDTipo
   INNER JOIN clientes ON donacionesresumen.IDCliente = clientes.IDCliente
-  INNER JOIN agroflor_administracion_empresas.historial_tasa_bcv AS TasaUsd ON donacionesresumen.Fecha = TasaUsd.FechaTasa
+  INNER JOIN historial_tasa_bcv AS TasaUsd ON donacionesresumen.Fecha = TasaUsd.FechaTasa
 WHERE
   donacionesresumen.IDDonaciones = ?');
   $consulta->execute($datos);

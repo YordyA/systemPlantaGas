@@ -13,9 +13,9 @@ require_once '../main.php';
 require_once '../sessionStart.php';
 require_once 'maquinasFiscalesMain.php';
 require_once '../dependencias.php';
-$serialMaquinaFiscal = Desencriptar($_GET['serialMaquinaFiscal']);
-$nroReporteZ = Desencriptar($_GET['nroReporteZ']);
-$responsable = $_SESSION['frigorifico']['NombreUsuario'];
+$serialMaquinaFiscal = desencriptar($_GET['serialMaquinaFiscal']);
+$nroReporteZ = desencriptar($_GET['nroReporteZ']);
+$responsable = $_SESSION['PlantaGas']['nombreUsuario'];
 
 $nroFacturaDesde = LimpiarCadena($_POST['nroFacturaDesde']);
 $nroFacturaHasta = LimpiarCadena($_POST['nroFacturaHasta']);

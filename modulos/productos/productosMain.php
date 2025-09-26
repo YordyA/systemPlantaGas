@@ -23,16 +23,17 @@ function ProductosListaID($datos)
   $sql = conexion()->prepare('SELECT
   *
 FROM
-  inventario_planta
+  productos
+   INNER JOIN tipo_productos on productos.IDTipoProducto = tipo_productos.IDTipo 
 WHERE
-  EstadoInventario = 1
-  AND IDInventario = ?');
+  EstadoProducto = 1
+  AND IDProducto = ?');
   $sql->execute($datos);
   return $sql;
 }
 
 
-//* LISTA DE CISTERNAS
+//* LISTA DE CISTERNASw
 function ProductosLista()
 {
   return conexion()->query('SELECT * FROM productos INNER JOIN tipo_productos on productos.IDTipoProducto = tipo_productos.IDTipo  WHERE EstadoProducto = 1');
@@ -48,3 +49,9 @@ function TiposCilindros()
   return conexion()->query('SELECT * FROM cilindros WHERE EstadoCilindro = 1');
 }
 
+//* ACTUALIZAR CISTERNA
+function preciosActualizar($datos)
+{
+  $sql = conexion()->prepare('UPDATE productos SET PrecioVenta = ? WHERE IDProducto = ?');
+  $sql->execute($datos);
+}

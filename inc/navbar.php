@@ -40,9 +40,9 @@
           <li>
             <a href="reporteFacturacionPorArticulo" id="reporteFacturacionPorArticulo">Facturacion Por Articulos</a>
           </li>
-          <li>
+          <!-- <li>
             <a href=" reporteVueltosPagoMovil" id="reporteVueltosPagoMovil">Vueltos Pago Movil</a>
-          </li>
+          </li> -->
           <li>
             <a href="MaquinaFIscalReporteZ" id="MaquinaFIscalReporteZ">Reporte Z</a>
           </li>
@@ -60,7 +60,7 @@
       <span class="divider">
         <hr />
       </span>
-      <li class="nav-item nav-item-has-children" id="despachosMain">
+      <!-- <li class="nav-item nav-item-has-children" id="despachosMain">
         <a href="#0" class="collapsed" data-bs-toggle="collapse" data-bs-target="#13">
           <span class=" icon">
             <i class="lni lni-delivery"></i>
@@ -111,7 +111,7 @@
       </li>
       <span class="divider">
         <hr />
-      </span>
+      </span> -->
       <li class="nav-item nav-item-has-children" id="inventarioPlantaMain">
         <a href="#0" class="collapsed" data-bs-toggle="collapse" data-bs-target="#10">
           <span class=" icon">

@@ -139,7 +139,6 @@
     tabla.innerHTML = respuesta.tabla
     $("#modalFactura").modal("show")
   }
-
   const despacharFactura = async (id) => {
     // Confirmar antes de despachar
     Swal.fire({
@@ -156,7 +155,9 @@
         try {
           const peticion = await fetch('modulos/inventario/inventarioRegistrarDespacho.php?id=' + id)
           const respuesta = await peticion.json()
-          
+
+          console.log('Respuesta del servidor:', respuesta); // Para depuración
+
           if (respuesta.alerta === "actualizacion") {
             // Mostrar éxito
             Swal.fire({
@@ -167,25 +168,26 @@
             }).then(() => {
               // Recargar la tabla
               ListaInformacion(['modulos/reportes/ReporteFacturasEmitidasPendientes.php'])
-              
+
               // Si hay datos para ticket, imprimir
               if (respuesta.ticket_data) {
                 imprimirTicket(respuesta.ticket_data)
               }
             })
           } else {
-            // Mostrar error
+            // Mostrar error específico del servidor
             Swal.fire({
-              title: respuesta.titulo,
-              text: respuesta.texto,
+              title: respuesta.titulo || 'Error',
+              text: respuesta.texto || 'Ocurrió un error desconocido',
               icon: 'error',
               confirmButtonText: 'Aceptar'
             })
           }
         } catch (error) {
+          console.error('Error en el despacho:', error); // Para depuración
           Swal.fire({
-            title: 'Error',
-            text: 'Ocurrió un error al procesar el despacho',
+            title: 'Error de conexión',
+            text: 'Ocurrió un error al procesar el despacho: ' + error.message,
             icon: 'error',
             confirmButtonText: 'Aceptar'
           })
@@ -198,43 +200,40 @@
   const imprimirTicket = (ticketData) => {
     // Aquí va tu lógica para imprimir el ticket
     console.log('Datos del ticket:', ticketData)
-    
+
     // Ejemplo básico de impresión
     const ventanaTicket = window.open('', '_blank')
     ventanaTicket.document.write(`
-      <html>
-        <head>
-          <title>Ticket de Despacho</title>
-          <style>
-            body { font-family: Arial, sans-serif; margin: 20px; }
-            .ticket { width: 300px; }
-            .header { text-align: center; margin-bottom: 20px; }
-            .item { display: flex; justify-content: space-between; margin: 5px 0; }
-            .total { border-top: 1px solid #000; margin-top: 10px; padding-top: 10px; font-weight: bold; }
-          </style>
-        </head>
-        <body>
-          <div class="ticket">
-            <div class="header">
-              <h3>${ticketData.empresa}</h3>
-              <p>DESPACHO DE GAS</p>
-              <p>N° Venta: ${ticketData.nro_venta}</p>
-            </div>
-            <div class="items">
-              ${ticketData.items.map(item => `
-                <div class="item">
-                  <span>${item.descripcion}</span>
-                  <span>${item.cantidad}</span>
-                </div>
-              `).join('')}
-            </div>
-            <div class="total">
-              <span>Total Despachado:</span>
-              <span>${ticketData.total} kg</span>
-            </div>
-          </div>
-        </body>
-      </html>
+     <html>
+<head>
+  <title>Ticket</title>
+  <style>
+    body { font-family: 'Courier New'; font-size: 11px; margin: 2px; width: 250px; }
+    .center { text-align: center; }
+    .bold { font-weight: bold; }
+    .item { display: flex; justify-content: space-between; margin: 1px 0; }
+  </style>
+</head>
+<body>
+  <div class="center bold">${ticketData.empresa}</div>
+  <div class="center">DESPACHO GAS</div>
+  <div>N°: ${ticketData.nro_venta}</div>
+  <div>F: ${new Date().toLocaleDateString()}</div>
+  <hr>
+  ${ticketData.items.map(item => `
+    <div class="item">
+      <span>${item.descripcion.substring(0, 15)}</span>
+      <span>x${item.cantidad}</span>
+    </div>
+  `).join('')}
+  <hr>
+  <div class="item bold">
+    <span>TOTAL:</span>
+    <span>${ticketData.total} kg</span>
+  </div>
+  <div class="center">--- CONFIRMADO ---</div>
+</body>
+</html>
     `)
     ventanaTicket.document.close()
     ventanaTicket.print()

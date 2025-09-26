@@ -3,6 +3,7 @@ if (!isset($_GET['serialMaquinaFiscal']) || $_GET['serialMaquinaFiscal'] == '' |
   exit("<script>window.location.href = 'MaquinaFIscalReporteZ'</script>");
 }
 require_once './modulos/main.php';
+require_once './modulos/dependencias.php';
 ?>
 <section class="table-components">
   <div class="container-fluid">
@@ -76,7 +77,7 @@ require_once './modulos/main.php';
       cancelButtonText: 'CANCELAR'
     }).then((result) => {
       if (result.isConfirmed) {
-        EnviarInformacion(
+        ajaxEnviarInformacionPOST(
           'modulos/maquinasFiscales/maquinasFiscalesRegistrarReporteZ.php?serialMaquinaFiscal=<?= $_GET['serialMaquinaFiscal']; ?>&nroReporteZ=<?= $_GET['nroReporteZ']; ?>'
         )
       }

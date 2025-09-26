@@ -1,14 +1,14 @@
 <?php
 require_once '../main.php';
 require_once '../sessionStart.php';
-require_once '../inventario/inventario_main.php';
 require_once '../reportes/reportes_main.php';
 require_once 'CobrarMain.php';
+require_once '../dependencias.php';
 
-$IDSucursal =$_SESSION['PlantaGas']['IDSucursal'];
-$NroFacturaPendiente = (LimpiarCadena(Desencriptar($_GET['id'])));
-$responsable =$_SESSION['PlantaGas']['NombreUsuario'];
-$tipoConsumo = LimpiarCadena($_GET['d']);
+$IDSucursal =$_SESSION['PlantaGas']['IDPlanta'];
+$NroFacturaPendiente = (limpiarCadena(desencriptar($_GET['id'])));
+$responsable =$_SESSION['PlantaGas']['nombreUsuario'];
+$tipoConsumo = limpiarCadena($_GET['d']);
 $fecha = date('Y-m-d');
 $NroDonacion = NDonacion(
   [
@@ -20,7 +20,6 @@ $NroDonacion = NDonacion(
 $consulta = consultarFacturasEnEsperaDonacion(
   [
     $IDSucursal,
-    $IDSucursal,
     $NroFacturaPendiente
   ]
 )->fetchAll(PDO::FETCH_ASSOC);
@@ -28,20 +27,6 @@ $consulta = consultarFacturasEnEsperaDonacion(
 $IDCliente = $consulta[0]['IDCliente'];
 $usd =$_SESSION['PlantaGas']['Dolar'];
 $totalVenta = 0;
-
-$productoSinExistencia = '';
-foreach ($consulta as $row) {
-  $producto = VerificarArticulosPorIDYNombre([$row['IDArticulo'], $IDSucursal])->fetch(PDO::FETCH_ASSOC);
-
-  if ($producto['ExistenciaArticulo'] < round(floatval($row['Cantidad']), 3)) {
-    $productoSinExistencia .= $producto['DescripcionArticulo'] . "\n";
-  }
-}
-
-if ($productoSinExistencia != '') {
-  echo json_encode([false, $productoSinExistencia]);
-  exit();
-}
 
 $nameRetiros = array(
   '0' => 'DONACIÓN',
@@ -65,25 +50,7 @@ $IDDonacionResumen = registrarResumenDonacion(
 );
 
 foreach ($consulta as $row) {
-  $precioBS = round(($tipoConsumo == 2) ? $row['PrecioArticulo'] * $usd : $row['CostoArticulo'] * $usd, 2);
-  ActualizarExistenciaRestar(
-    [
-      round(floatval($row['Cantidad']), 3),
-      $row['IDArticulo'],
-      $IDSucursal,
-    ]
-  );
-  SalidaProductosInventario(
-    [
-      $IDSucursal,
-      $fecha,
-      $nameRetiros[$tipoConsumo] . ' NRO ' . $NroDonacion,
-      $row['IDArticulo'],
-      round(floatval($row['Cantidad']), 3),
-      $responsable
-    ]
-  );
-
+ $precioBS = $consulta['TipoMoneda'] == 1 ? round(floatval($consulta['PrecioVenta'] * $usd), 2) : round(floatval($consulta['PrecioVenta']), 2);
   RegistrarDetalleDonacion(
     [
       $IDDonacionResumen,

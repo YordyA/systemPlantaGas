@@ -11,15 +11,15 @@ if (!isset($_GET['id']) || $_GET['id'] == '') {
 }
 require_once '../main.php';
 require_once '../sessionStart.php';
-require_once '../inventario/inventario_main.php';
+require_once '../dependencias.php';
 require_once '../reportes/reportes_main.php';
 require_once 'CobrarMain.php';
 
-$IDSucursal =$_SESSION['PlantaGas']['IDSucursal'];
-$responsable =$_SESSION['PlantaGas']['NombreUsuario'];
+$IDSucursal =$_SESSION['PlantaGas']['IDPlanta'];
+$responsable =$_SESSION['PlantaGas']['nombreUsuario'];
 
 $NFacturaEspera = Desencriptar($_GET['id']);
-$consultarFacturaEspera = consultarFacturasEnEsperaDonacion([$IDSucursal, $IDSucursal, $NFacturaEspera]);
+$consultarFacturaEspera = consultarFacturasEnEsperaDonacion([$IDSucursal, $NFacturaEspera]);
 if ($consultarFacturaEspera->rowCount() == 0) {
   $alerta = [
     "alerta"  => "simple",
@@ -48,19 +48,6 @@ $IDFacturaResumen = registrarResumenVenta(
 );
 
 foreach ($consultarFacturaEspera as $row) {
-  ActualizarExistenciaRestar([$row['Cantidad'], $row['IDArticulo'], $row['IDSucursal']]);
-
-  SalidaProductosInventario(
-    [
-      $row['IDSucursal'],
-      date('Y-m-d'),
-      '(ENTREGA DE PRODUCTOS) VENTA NRO ' . $NroNotaVenta,
-      $row['IDArticulo'],
-      $row['Cantidad'],
-      $responsable
-    ]
-  );
-
   RegistrarDetalleVenta(
     [
       $IDFacturaResumen,

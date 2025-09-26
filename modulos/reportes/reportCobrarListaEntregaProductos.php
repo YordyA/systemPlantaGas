@@ -2,7 +2,7 @@
 require_once '../main.php';
 require_once '../sessionStart.php';
 require_once 'reportes_main.php';
-
+require_once '../dependencias.php';
 $del = LimpiarCadena($_GET['d']);
 $hasta = LimpiarCadena($_GET['h']);
 $IDSucursla = $_SESSION['PlantaGas']['IDPlanta'];

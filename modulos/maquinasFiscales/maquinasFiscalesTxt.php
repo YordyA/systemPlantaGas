@@ -1,15 +1,15 @@
 <?php
 require_once '../main.php';
-require_once '../session_start.php';
+require_once '../sessionStart.php';
 require_once '../maquinasFiscales/maquinasFiscalesMain.php';
-
+require_once '../dependencias.php';
 // Limpiar las entradas
 $del = LimpiarCadena($_GET['d']);
 $hasta = LimpiarCadena($_GET['h']);
 
 $nombreArchivo = 'REPORTES_Z.txt';
 $contenido = '';
-foreach (maquinasFiscalesConsultarXFecha([$_SESSION['frigorifico']['IDSucursal'], $del, $hasta]) as $row) {
+foreach (maquinasFiscalesConsultarXFecha([$_SESSION['PlantaGas']['IDPlanta'], $del, $hasta]) as $row) {
   $contenido .= $row['NroFacturaDesde'] . "\t";
   $contenido .= $row['NroFacturaHasta'] . "\t";
   $contenido .= $row['FechaCierreReporteZ'] . "\t";
