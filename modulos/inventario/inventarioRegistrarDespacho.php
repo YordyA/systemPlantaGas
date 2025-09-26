@@ -18,7 +18,7 @@ require_once '../sessionStart.php';
 require_once '../dependencias.php';
 require_once 'inventarioMain.php';
 require_once '../reportes/reportes_main.php';
-
+require_once '../cobrar/CobrarMain.php';
 try {
     $reponsable = $_SESSION['PlantaGas']['nombreUsuario'];
     $IDPlanta = $_SESSION['PlantaGas']['IDPlanta'];
@@ -74,7 +74,7 @@ try {
     }
     
     foreach ($facturas as $row) {
-        $TotalGas += round($row['CapacipadCilindro'] * $row['Cantidad'], 2) * 2;
+        $TotalGas += round(($row['CapacipadCilindro'] * $row['Cantidad']) * 2, 2);
         $NroVentaPlanta = $row['NVentaResumen'];
         $ticketData['items'][] = [
             'descripcion' => $row['DescripcionTipo'] . ' ' . $row['DescripcionProducto'],
@@ -97,6 +97,7 @@ try {
     
     // Realizar el despacho
     $resultado = almacenCantidadRestar([$TotalGas, $IDInventario]);
+     ActualizarFechaDespacho([date('Y-m-d'), $NroVenta]);
 
     $resultadoMovimiento = MovimientosDeAlmacenRegistrar([
         $IDPlanta,
@@ -114,15 +115,14 @@ try {
         throw new Exception("Error al registrar el movimiento de almacén");
     }
 
-    $ticketData['total'] = $TotalGas;
-    $ticketData['nro_venta'] = $NroVentaPlanta;
 
+    // CORRECIÓN: Cambiar "ticket_data" por "numero_venta" que es lo que espera el frontend
     $alerta = [
         "alerta"  => "actualizacion",
         "titulo"  => "¡Despacho Registrado!",
         "texto"   => "Los datos fueron registrados correctamente. Despachado: " . $TotalGas . " kg",
         "tipo"    => "success",
-        "ticket_data"  => $NroVenta
+        "numero_venta"  => $NroVenta  // Cambiado de "ticket_data" a "numero_venta"
     ];
     echo json_encode($alerta);
     

@@ -42,6 +42,13 @@ function ActualizarResumenVenta($datos)
 }
 
 
+//! ANULAR RESUMEN DONACIONES
+function ActualizarFechaDespacho($datos)
+{
+  $sql = conexion()->prepare('UPDATE facturasresumen SET FechaDespacho = ? WHERE IDResumenVenta = ?');
+  $sql->execute($datos);
+}
+
 //! REGISTRAR MEDIOS DE PAGOS
 function registrarMediosPagos($datos)
 {
@@ -113,7 +120,6 @@ function EliminarFacturaPendiente($datos)
   $sql = conexion()->prepare('DELETE FROM facturasespera WHERE facturasespera.IDCaja = ? AND facturasespera.IDSucursal = ? AND facturasespera.IDCliente = ? AND facturasespera.NFacturaEspera = ?');
   return $sql->execute($datos);
 }
-
 
 //// DONACIONES ////
 
