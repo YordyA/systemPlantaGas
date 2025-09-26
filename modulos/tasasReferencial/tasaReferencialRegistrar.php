@@ -1,6 +1,6 @@
 <?php
 require_once '../main.php';
-require_once '../dependencia.php';
+require_once '../dependencias.php';
 require_once 'tasaReferencialMain.php';
 
 // --- URL Y PETICIÓN ---
