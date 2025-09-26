@@ -67,7 +67,7 @@
 
 <script>
   inventarioPlantaMain.classList.add('active')
-  InventarioConteoFisico.classList.add('active')
+  InventarioConteoFisicoFinal.classList.add('active')
 
   const formulario_actualizar_cantidad = document.getElementById('actualizar_cantidad')
 
