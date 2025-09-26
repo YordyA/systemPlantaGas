@@ -122,7 +122,7 @@ try {
         "titulo"  => "¡Despacho Registrado!",
         "texto"   => "Los datos fueron registrados correctamente. Despachado: " . $TotalGas . " kg",
         "tipo"    => "success",
-        "ticket_data"  => $ticketData
+        "ticket_data"  => $NroVenta
     ];
     echo json_encode($alerta);
     

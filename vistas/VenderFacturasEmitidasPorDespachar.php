@@ -156,7 +156,7 @@
           const peticion = await fetch('modulos/inventario/inventarioRegistrarDespacho.php?id=' + id)
           const respuesta = await peticion.json()
 
-          console.log('Respuesta del servidor:', respuesta); // Para depuración
+          console.log('Respuesta del servidor:', respuesta);
 
           if (respuesta.alerta === "actualizacion") {
             // Mostrar éxito
@@ -169,13 +169,12 @@
               // Recargar la tabla
               ListaInformacion(['modulos/reportes/ReporteFacturasEmitidasPendientes.php'])
 
-              // Si hay datos para ticket, imprimir
-              if (respuesta.ticket_data) {
-                imprimirTicket(respuesta.ticket_data)
+              // Si hay un número de venta para el ticket, generar URL
+              if (respuesta.numero_venta) {
+                generarTicket(respuesta.numero_venta)
               }
             })
           } else {
-            // Mostrar error específico del servidor
             Swal.fire({
               title: respuesta.titulo || 'Error',
               text: respuesta.texto || 'Ocurrió un error desconocido',
@@ -184,7 +183,7 @@
             })
           }
         } catch (error) {
-          console.error('Error en el despacho:', error); // Para depuración
+          console.error('Error en el despacho:', error);
           Swal.fire({
             title: 'Error de conexión',
             text: 'Ocurrió un error al procesar el despacho: ' + error.message,
@@ -196,48 +195,30 @@
     })
   }
 
-  // Función para imprimir ticket (debes adaptarla a tu sistema de tickets)
-  const imprimirTicket = (ticketData) => {
-    // Aquí va tu lógica para imprimir el ticket
-    console.log('Datos del ticket:', ticketData)
+  // Función para generar el ticket con el número de venta
+  const generarTicket = (numeroVenta) => {
+    // Crear URL con el número de venta
+    const urlTicket = `modulos/reportes/generar_ticket.php?id=${encodeURIComponent(numeroVenta)}`
 
-    // Ejemplo básico de impresión
-    const ventanaTicket = window.open('', '_blank')
-    ventanaTicket.document.write(`
-     <html>
-<head>
-  <title>Ticket</title>
-  <style>
-    body { font-family: 'Courier New'; font-size: 11px; margin: 2px; width: 250px; }
-    .center { text-align: center; }
-    .bold { font-weight: bold; }
-    .item { display: flex; justify-content: space-between; margin: 1px 0; }
-  </style>
-</head>
-<body>
-  <div class="center bold">${ticketData.empresa}</div>
-  <div class="center">DESPACHO GAS</div>
-  <div>N°: ${ticketData.nro_venta}</div>
-  <div>F: ${new Date().toLocaleDateString()}</div>
-  <hr>
-  ${ticketData.items.map(item => `
-    <div class="item">
-      <span>${item.descripcion.substring(0, 15)}</span>
-      <span>x${item.cantidad}</span>
-    </div>
-  `).join('')}
-  <hr>
-  <div class="item bold">
-    <span>TOTAL:</span>
-    <span>${ticketData.total} kg</span>
-  </div>
-  <div class="center">--- CONFIRMADO ---</div>
-</body>
-</html>
-    `)
-    ventanaTicket.document.close()
-    ventanaTicket.print()
-    ventanaTicket.close()
+    console.log('Generando ticket con URL:', urlTicket);
+
+    // Abrir en nueva ventana para imprimir
+    const ventanaTicket = window.open(urlTicket, '_blank', 'width=300,height=600')
+
+    // Esperar a que cargue la ventana y luego imprimir
+    setTimeout(() => {
+      if (ventanaTicket && !ventanaTicket.closed) {
+        ventanaTicket.focus()
+        ventanaTicket.print()
+
+        // Opcional: cerrar ventana después de imprimir
+        setTimeout(() => {
+          if (!ventanaTicket.closed) {
+            ventanaTicket.close()
+          }
+        }, 1000)
+      }
+    }, 500)
   }
 
   // Event listeners
