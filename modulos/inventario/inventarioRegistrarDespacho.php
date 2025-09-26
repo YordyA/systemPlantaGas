@@ -86,7 +86,7 @@ try {
         $alerta = [
             "alerta"  => "simple",
             "titulo"  => "¡EXISTENCIA INSUFICIENTE!",
-            "texto"   => "Existencia actual: " . $Existencia . " kg. Se requieren: " . $TotalGas . " kg",
+            "texto"   => "Existencia actual: " . $Existencia . " Litros. Se requieren: " . $TotalGas . " Litros",
             "tipo"    => "error"
         ];
         echo json_encode($alerta);
