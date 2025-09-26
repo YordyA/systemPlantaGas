@@ -13,6 +13,7 @@ $estatus = array(
 
 foreach (reporteFacturasPendientePorDespacho([$_SESSION['PlantaGas']['IDPlanta']]) as $row) {
   $tabla .= '<tr>';
+    $tabla .= '<td>' . $row['Fecha'] . '</td>';
   $tabla .= '<td>' . $row['NVentaResumen'] . '</td>';
   $tabla .= '<td>' . $row['NFacturaFiscal'] . '</td>';
   $tabla .= '<td>' . $row['DescripcionCaja'] . '</td>';
